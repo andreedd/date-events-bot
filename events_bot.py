@@ -64,7 +64,7 @@ def alarm(context):
         job_exists = events_db.execute('SELECT event FROM events WHERE event = %s', [item.title])
         
         if len(events_db.fetchall()) != 1:
-            mess_content = item.title + item.url
+            mess_content = "New event found:\n" + item.title + "\n" + item.url
             job = context.job
             context.bot.send_message(job.context, text=mess_content)
             events_db.execute('INSERT INTO events (event) VALUES (%s);', [item.title])
@@ -95,7 +95,7 @@ def set_timer(update: Update, context: CallbackContext) -> None:
         job_removed = remove_job_if_exists(str(chat_id), context)
         context.job_queue.run_once(alarm, 5, context=chat_id, name=str(chat_id))
 
-        text = 'Timer successfully set!'
+        text = 'Tracking DaTe events'
         if job_removed:
             text += ' Old one was removed.'
         update.message.reply_text(text)
@@ -108,15 +108,11 @@ def unset(update: Update, context: CallbackContext) -> None:
     """Remove the job if the user changed their mind."""
     chat_id = update.message.chat_id
     job_removed = remove_job_if_exists(str(chat_id), context)
-    text = 'Timer successfully cancelled!' if job_removed else 'You have no active timer.'
+    text = 'Events tracking stopped.' if job_removed else 'You are currently not tracking events'
     update.message.reply_text(text)
 
 
 def main():
-    #text = "HELLOOOOO"
-    #requests.post(f"https://api.telegram.org/bot{TOKEN}/sendMessage?chat_id={CHAT_ID}&text={events[0].title}")
-    #print(events)
-
     # Create the Updater and pass it your bot's token.
     updater = Updater(TOKEN)
 
