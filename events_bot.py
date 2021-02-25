@@ -91,7 +91,7 @@ def set_timer(update: Update, context: CallbackContext) -> None:
     chat_id = update.message.chat_id
     try:
         job_removed = remove_job_if_exists(str(chat_id), context)
-        context.job_queue.run_daily(alarm, datetime.time(hour=21, minute=20, tzinfo=pytz.timezone('Europe/Helsinki')), context=chat_id, name=str(chat_id))
+        context.job_queue.run_daily(alarm, datetime.time(hour=21, minute=25, tzinfo=pytz.timezone('Europe/Helsinki')), context=chat_id, name=str(chat_id))
 
         text = 'Tracking DaTe events'
         if job_removed:
