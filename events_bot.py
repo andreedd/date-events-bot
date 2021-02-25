@@ -93,7 +93,7 @@ def set_timer(update: Update, context: CallbackContext) -> None:
     try:
         # args[0] should contain the time for the timer in seconds
         job_removed = remove_job_if_exists(str(chat_id), context)
-        context.job_queue.run_once(alarm, due, context=chat_id, name=str(chat_id))
+        context.job_queue.run_once(alarm, 5, context=chat_id, name=str(chat_id))
 
         text = 'Timer successfully set!'
         if job_removed:
