@@ -2,9 +2,9 @@ import requests
 import os
 import logging
 import psycopg2
+import datetime
 
 from bs4 import BeautifulSoup
-
 from telegram import Update
 from telegram.ext import Updater, CommandHandler, CallbackContext
 
@@ -64,7 +64,7 @@ def alarm(context):
         job_exists = events_db.execute('SELECT event FROM events WHERE event = %s', [item.title])
         
         if len(events_db.fetchall()) != 1:
-            mess_content = "New event found:\n" + item.title + "\n" + item.url
+            mess_content = "🎉New DaTe event!🎉\n" + item.title + "\n" + item.url
             job = context.job
             context.bot.send_message(job.context, text=mess_content)
             events_db.execute('INSERT INTO events (event) VALUES (%s);', [item.title])
@@ -93,7 +93,7 @@ def set_timer(update: Update, context: CallbackContext) -> None:
     try:
         # args[0] should contain the time for the timer in seconds
         job_removed = remove_job_if_exists(str(chat_id), context)
-        context.job_queue.run_once(alarm, 5, context=chat_id, name=str(chat_id))
+        context.job_queue.run_daily(alarm, datetime.time(hour=16, minute=8, tzinfo=pytz.timezone('Europe/Helsinki'), context=chat_id, name=str(chat_id))
 
         text = 'Tracking DaTe events'
         if job_removed:
