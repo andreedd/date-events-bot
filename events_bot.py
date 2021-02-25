@@ -17,7 +17,6 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 TOKEN = os.environ['API_KEY']
-CHAT_ID = "349425211"
 
 class Event:
     def __init__(self, title, url):
@@ -77,7 +76,6 @@ def alarm(context):
     events_db.close()
 
 
-
 def remove_job_if_exists(name, context):
     """Remove job with given name. Returns whether job was removed."""
     current_jobs = context.job_queue.get_jobs_by_name(name)
@@ -94,7 +92,7 @@ def set_timer(update: Update, context: CallbackContext) -> None:
     try:
         # args[0] should contain the time for the timer in seconds
         job_removed = remove_job_if_exists(str(chat_id), context)
-        context.job_queue.run_daily(alarm, datetime.time(hour=16, minute=15, tzinfo=pytz.timezone('Europe/Helsinki')), context=chat_id, name=str(chat_id))
+        context.job_queue.run_daily(alarm, datetime.time(hour=16, minute=25, tzinfo=pytz.timezone('Europe/Helsinki')), context=chat_id, name=str(chat_id))
 
         text = 'Tracking DaTe events'
         if job_removed:
