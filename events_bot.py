@@ -2,7 +2,6 @@ import requests
 import os
 import logging
 import psycopg2
-import sqlite3 as lite
 
 from bs4 import BeautifulSoup
 
