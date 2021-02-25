@@ -93,7 +93,7 @@ def set_timer(update: Update, context: CallbackContext) -> None:
     try:
         # args[0] should contain the time for the timer in seconds
         job_removed = remove_job_if_exists(str(chat_id), context)
-        context.job_queue.run_daily(alarm, datetime.time(hour=16, minute=8, tzinfo=pytz.timezone('Europe/Helsinki'), context=chat_id, name=str(chat_id))
+        context.job_queue.run_daily(alarm, datetime.time(hour=16, minute=12, tzinfo=pytz.timezone('Europe/Helsinki')), context=chat_id, name=str(chat_id))
 
         text = 'Tracking DaTe events'
         if job_removed:
